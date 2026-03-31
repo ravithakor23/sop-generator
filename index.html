@@ -428,11 +428,12 @@
       }
 
       const data = await response.json();
-      // Handle raw OpenAI response, wrapped sop field, or fallback
-      const sop = data.sop
-        || data?.choices?.[0]?.message?.content
-        || data?.output
-        || JSON.stringify(data);
+      const root = Array.isArray(data) ? data[0] : data;
+      const sop = root?.sop
+        || root?.output?.[0]?.content?.[0]?.text
+        || root?.choices?.[0]?.message?.content
+        || root?.text
+        || JSON.stringify(root);
 
       document.getElementById('sopOutput').textContent = sop;
       document.getElementById('outputSection').style.display = 'block';

@@ -429,8 +429,8 @@
 
       const data = await response.json();
       const root = Array.isArray(data) ? data[0] : data;
-      const sop = root?.sop
-        || root?.output?.[0]?.content?.[0]?.text
+      const sop = root?.output?.[0]?.content?.[0]?.text
+        || root?.sop
         || root?.choices?.[0]?.message?.content
         || root?.text
         || JSON.stringify(root);
